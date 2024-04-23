@@ -9,15 +9,13 @@ class Graph(QGraphicsScene):
         super().__init__(parent)
         self.setBackgroundBrush(QBrush(QColor(240, 240, 240)))
         self.vertices = []
+        self.labels = {}
         self.edges = []
         self.add_vertex('v1')
         self.add_vertex('v2')
         self.add_vertex('v3')
-        self.add_vertex('v4')
-        self.add_vertex('v5')
-        self.add_vertex('v6')
-        self.add_edge(self.vertices[0], self.vertices[1])
-        self.add_edge(self.vertices[0], self.vertices[0])
+        self.add_edge('v1', 'v2')
+        self.add_edge('v1', 'v1')
 
     def add_vertex(self, label, diameter=30):
         x = 100 + (len(self.vertices) % 5) * 50 
@@ -26,13 +24,16 @@ class Graph(QGraphicsScene):
         vertex.setPos(x, y)
         self.addItem(vertex)
         self.vertices.append(vertex)
+        self.labels[label] = vertex
         return vertex
 
     def add_edge(self, vertex1, vertex2):
+        # Check if loop, parallel edge, or normal edge 
         if vertex1 == vertex2:
-            edge = Loop(vertex1)
+            edge = Loop(self.labels[vertex1])
         else:
-            edge = StraightEdge(vertex1, vertex2)
+            edge = StraightEdge(self.labels[vertex1], self.labels[vertex2])
+        
         self.addItem(edge)
         self.edges.append(edge)
         self.update_graphics()

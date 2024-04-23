@@ -6,6 +6,8 @@ from graph_window import GraphWidget
 class GraphTheorySketchpad(QMainWindow):
     def __init__(self):
         super().__init__()
+        self.graphWidget = GraphWidget()
+        self.graph = self.graphWidget.graph
 
         # Main widget and layout
         self.main_widget = QWidget()
@@ -31,7 +33,7 @@ class GraphTheorySketchpad(QMainWindow):
         self.left_panel.setStyleSheet("background-color: lightblue;")
         self.horizontal_splitter.addWidget(self.left_panel)
 
-        self.right_panel = GraphWidget()
+        self.right_panel = self.graphWidget
         self.right_panel.setStyleSheet("background-color: darkgrey;")
         self.horizontal_splitter.addWidget(self.right_panel)
 

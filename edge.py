@@ -29,3 +29,7 @@ class Loop(QGraphicsEllipseItem):
         x = self.vertex.pos().x() + self.diameter / 2 - self.loop_diameter / 2
         y = self.vertex.pos().y() - self.loop_diameter / 2
         self.setRect(x, y, self.loop_diameter, self.loop_diameter)
+
+class CurvedEdge(QGraphicsLineItem):
+    # For parallel edges
+    pass
