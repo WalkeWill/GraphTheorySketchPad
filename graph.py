@@ -1,7 +1,7 @@
 from PyQt6.QtWidgets import QGraphicsScene
 from PyQt6.QtGui import QBrush, QColor
 from PyQt6.QtCore import QRectF
-from edge import Edge
+from edge import StraightEdge, Loop
 from vertex import VertexNode
 
 class Graph(QGraphicsScene):
@@ -17,6 +17,7 @@ class Graph(QGraphicsScene):
         self.add_vertex('v5')
         self.add_vertex('v6')
         self.add_edge(self.vertices[0], self.vertices[1])
+        self.add_edge(self.vertices[0], self.vertices[0])
 
     def add_vertex(self, label, diameter=30):
         x = 100 + (len(self.vertices) % 5) * 50 
@@ -28,7 +29,10 @@ class Graph(QGraphicsScene):
         return vertex
 
     def add_edge(self, vertex1, vertex2):
-        edge = Edge(vertex1, vertex2)
+        if vertex1 == vertex2:
+            edge = Loop(vertex1)
+        else:
+            edge = StraightEdge(vertex1, vertex2)
         self.addItem(edge)
         self.edges.append(edge)
         self.update_graphics()

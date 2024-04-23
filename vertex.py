@@ -2,9 +2,9 @@ from PyQt6.QtWidgets import QGraphicsEllipseItem, QGraphicsTextItem
 from PyQt6.QtGui import QBrush, QColor, QFont
 
 class VertexNode(QGraphicsEllipseItem):
-    def __init__(self, label, diameter=30):
+    def __init__(self, label, color=QColor(0, 0, 255), diameter=30):
         super().__init__(0, 0, diameter, diameter)
-        self.setBrush(QBrush(QColor(0, 0, 255)))  # Blue Vertices
+        self.setBrush(QBrush(color))  # Blue Vertices
         self.setFlag(QGraphicsEllipseItem.GraphicsItemFlag.ItemIsMovable, True)
         self.diameter = diameter
         self.setZValue(1)
