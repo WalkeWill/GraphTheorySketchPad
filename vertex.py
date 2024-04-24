@@ -8,6 +8,7 @@ class VertexNode(QGraphicsEllipseItem):
         self.setFlag(QGraphicsEllipseItem.GraphicsItemFlag.ItemIsMovable, True)
         self.diameter = diameter
         self.setZValue(1)
+        self.name = label
 
         self.label = QGraphicsTextItem(label, self)
         self.label.setDefaultTextColor(QColor(255, 0, 0))  # Red Text

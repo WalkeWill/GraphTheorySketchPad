@@ -18,8 +18,8 @@ class Graph(QGraphicsScene):
         self.add_vertex('v3')
         self.add_edge('v1', 'v2')
         self.add_edge('v1', 'v1')
-        self.add_edge('v2', 'v1')
-        self.add_edge('v1', 'v2')
+        self.add_edge('v2', 'v3')
+        self.delete_vertex(self.vertices[0])
 
     def add_vertex(self, label, diameter=30):
         x = 100 + (len(self.vertices) % 5) * 50 
@@ -44,6 +44,24 @@ class Graph(QGraphicsScene):
         self.edgeLabels[(vertex1, vertex2)] += 1
         self.update_graphics()
         return edge
+    
+    def delete_edge(self, edge):
+        self.removeItem(edge)
+        self.edges.remove(edge)
+        self.edgeLabels[(edge.start.name, edge.end.name)] -= 1
+        self.update_graphics
+
+    def delete_vertex(self, vertex):
+        self.removeItem(vertex)
+        self.vertices.remove(vertex)
+        del self.verticeLabels[vertex.name]
+        # Need to delete all edges connected to this vertex as well.
+        for edge in list(self.edges):
+            if edge.start == vertex or edge.end == vertex:
+                self.removeItem(edge)
+                self.edges.remove(edge)
+                self.edgeLabels[(edge.start.name, edge.end.name)] -= 1
+        self.update_graphics
 
     def update_graphics(self):
         for edge in self.edges:

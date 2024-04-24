@@ -5,7 +5,8 @@ from PyQt6.QtGui import QPen, QColor, QPainterPath
 class Loop(QGraphicsEllipseItem):
     def __init__(self, vertex, diameter=30, loop_diameter=40):
         super().__init__()
-        self.vertex = vertex
+        self.start = vertex
+        self.end = vertex
         self.diameter = diameter
         self.loop_diameter=loop_diameter
         self.setPen(QPen(QColor(0, 0, 0), 2))
@@ -14,8 +15,8 @@ class Loop(QGraphicsEllipseItem):
 
     def update_position(self):
         # Calculate the offset to center the loop around the vertex
-        x = self.vertex.pos().x() + self.diameter / 2 - self.loop_diameter / 2
-        y = self.vertex.pos().y() - self.loop_diameter / 2
+        x = self.start.pos().x() + self.diameter / 2 - self.loop_diameter / 2
+        y = self.start.pos().y() - self.loop_diameter / 2
         self.setRect(x, y, self.loop_diameter, self.loop_diameter)
 
 class Edge(QGraphicsPathItem):

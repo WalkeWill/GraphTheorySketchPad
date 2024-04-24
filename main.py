@@ -1,7 +1,7 @@
 import sys
 from PyQt6.QtWidgets import QApplication, QMainWindow, QWidget, QVBoxLayout, QSplitter
 from PyQt6.QtCore import Qt
-from graph_window import GraphWidget
+from graph_widget import GraphWidget
     
 class GraphTheorySketchpad(QMainWindow):
     def __init__(self):
