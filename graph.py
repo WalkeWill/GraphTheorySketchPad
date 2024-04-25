@@ -13,12 +13,12 @@ class Graph(QGraphicsScene):
         self.verticeLabels = {}
         self.edges = []
         self.edgeLabels = defaultdict(int)
-        self.add_vertex('v1')
-        self.add_vertex('v2')
-        self.add_vertex('v3')
-        self.add_vertex('v4')
-        self.add_edge('v1', 'v2')
-        self.add_edge('v3', 'v4')
+        self.add_vertex('1')
+        self.add_vertex('2')
+        self.add_vertex('3')
+        self.add_edge('1','2')
+        self.add_edge('2','3')
+        self.add_edge('1','3')
 
     def add_vertex(self, label, color='Blue', diameter=30):
         diameter = 30
@@ -106,7 +106,25 @@ class Graph(QGraphicsScene):
         return total_components
 
     def getIsBipartite(self):
-        return 'N/A'
+        colors = {}
+        frontier = list(self.verticeLabels.keys())
+
+        def dfs(node, color):
+            if node in colors:
+                return colors[node] == color
+            colors[node] = color
+            edges = list(filter(lambda x: self.edgeLabels[x] > 0 and node in x, self.edgeLabels))
+            for neighbor in edges:
+                if not dfs(neighbor[0], 1 - color) and not dfs(neighbor[1], 1 - color):
+                    return False
+            return True
+
+        for vertex in frontier:
+            if vertex not in colors:  # If vertex is not colored, it means it hasn't been visited
+                if not dfs(vertex, 0):  # Start coloring with 0, alternates will be 1
+                    return False
+        return True
+       
     
     def copy(self):
         new_graph = Graph()
