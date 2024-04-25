@@ -8,6 +8,10 @@ class GraphWidget(QWidget):
         super().__init__()
         self.graph = Graph()
         self.initUI()
+        self.graph.add_vertex('1', 'black')
+        self.graph.add_vertex('2', 'blue')
+        self.graph.add_edge('1','2')
+        self.graph.add_edge('2','1')
 
     def initUI(self):
         layout = QVBoxLayout(self)

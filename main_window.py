@@ -1,13 +1,15 @@
 from PyQt6.QtWidgets import QMainWindow, QWidget, QVBoxLayout, QSplitter
 from PyQt6.QtCore import Qt
-from graph_widget import GraphWidget
-from add_feature_widget import FeatureWidget
+from widgets.graph_widget import GraphWidget
+from widgets.add_feature_widget import FeatureWidget
+from widgets.graph_info_widget import GraphInfoWidget
 
 class GraphTheorySketchpad(QMainWindow):
     def __init__(self):
         super().__init__()
         self.graphWidget = GraphWidget()
         self.graph = self.graphWidget.graph
+        self.info = GraphInfoWidget(self.graph)
 
         # Main widget and layout
         self.main_widget = QWidget()
@@ -30,10 +32,8 @@ class GraphTheorySketchpad(QMainWindow):
 
         # Splitter for dividing the left panel into top and bottom
         self.left_vertical_splitter = QSplitter(Qt.Orientation.Vertical)
-        self.left_panel_upper = FeatureWidget(self.graph)
-        # self.left_panel_upper.setStyleSheet("background-color: navy;") 
-        self.left_panel_lower = QWidget()
-        self.left_panel_lower.setStyleSheet("background-color: lightcoral;")
+        self.left_panel_upper = FeatureWidget(self.graph, self.info)
+        self.left_panel_lower = self.info
 
         # Add widgets to the vertical splitter in the left panel
         self.left_vertical_splitter.addWidget(self.left_panel_upper)

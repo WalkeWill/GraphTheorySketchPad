@@ -38,6 +38,6 @@ class Edge(QGraphicsPathItem):
             control_point2 = QPointF(end_point.x(), end_point.y() + self.curvature)
 
             path.moveTo(start_point)
-            path.cubicTo(control_point1, control_point2, end_point) 
+            path.cubicTo(control_point1, control_point2, end_point)
 
             self.setPath(path)

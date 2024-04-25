@@ -60,3 +60,15 @@ class Graph(QGraphicsScene):
     def update_graphics(self):
         for edge in self.edges:
             edge.update_position()
+
+    def getNumVertices(self):
+        return len(self.vertices)
+    
+    def getNumEdges(self):
+        return len(self.edges)
+    
+    def getNumComponents(self):
+        return 'N/A'
+
+    def getIsBipartite(self):
+        return 'N/A'
