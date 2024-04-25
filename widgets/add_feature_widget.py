@@ -2,10 +2,11 @@ from PyQt6.QtWidgets import (QWidget, QVBoxLayout, QHBoxLayout,
                              QLabel, QLineEdit, QPushButton, QComboBox, QMessageBox)
 
 class FeatureWidget(QWidget):
-    def __init__(self, graph, infoWidget):
+    def __init__(self, graph, infoWidget, deleteWidget):
         super().__init__()
         self.graph = graph
         self.info = infoWidget
+        self.delete = deleteWidget
         self.initUI()
 
     def initUI(self):
@@ -65,6 +66,7 @@ class FeatureWidget(QWidget):
 
         self.graph.add_vertex(label, color)
         self.info.update_info()
+        self.delete.update_list()
 
     def add_edge(self):
         start = self.start_vertice_input.text()
@@ -81,3 +83,4 @@ class FeatureWidget(QWidget):
 
         self.graph.add_edge(start, end)
         self.info.update_info()
+        self.delete.update_list()

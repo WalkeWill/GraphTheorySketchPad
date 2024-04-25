@@ -67,8 +67,23 @@ class Graph(QGraphicsScene):
     def getNumEdges(self):
         return len(self.edges)
     
+    def get_degree(self, vertex):
+        degree = 0
+        g = self.edgeLabels
+        for e in self.edgeLabels:
+            if vertex.name in e:
+                if e[0] == e[1]:
+                    # Double degree count for loops
+                    degree += 2 * self.edgeLabels[e]
+                else:
+                    degree += self.edgeLabels[e]
+        return degree
+    
     def getNumComponents(self):
         return 'N/A'
 
     def getIsBipartite(self):
         return 'N/A'
+    
+    def is_bridge(self, edge):
+        return True

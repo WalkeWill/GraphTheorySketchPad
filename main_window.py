@@ -3,6 +3,7 @@ from PyQt6.QtCore import Qt
 from widgets.graph_widget import GraphWidget
 from widgets.add_feature_widget import FeatureWidget
 from widgets.graph_info_widget import GraphInfoWidget
+from widgets.delete_feature_widget import DeleteFeatureWidget
 
 class GraphTheorySketchpad(QMainWindow):
     def __init__(self):
@@ -10,6 +11,8 @@ class GraphTheorySketchpad(QMainWindow):
         self.graphWidget = GraphWidget()
         self.graph = self.graphWidget.graph
         self.info = GraphInfoWidget(self.graph)
+        self.deleteFeature = DeleteFeatureWidget(self.graph,self.info)
+        self.addFeature = FeatureWidget(self.graph, self.info, self.deleteFeature)
 
         # Main widget and layout
         self.main_widget = QWidget()
@@ -32,7 +35,7 @@ class GraphTheorySketchpad(QMainWindow):
 
         # Splitter for dividing the left panel into top and bottom
         self.left_vertical_splitter = QSplitter(Qt.Orientation.Vertical)
-        self.left_panel_upper = FeatureWidget(self.graph, self.info)
+        self.left_panel_upper = self.addFeature
         self.left_panel_lower = self.info
 
         # Add widgets to the vertical splitter in the left panel
@@ -44,25 +47,28 @@ class GraphTheorySketchpad(QMainWindow):
 
         # Graph Panel
         self.right_panel = self.graphWidget
-        self.right_panel.setStyleSheet("background-color: darkgrey;")
         self.horizontal_splitter.addWidget(self.right_panel)
 
-        # Placeholder widget for the bottom area
-        self.bottom_panel = QWidget()
-        self.bottom_panel.setStyleSheet("background-color: lightgrey;")
+        # Bottom area setup with a horizontal splitter for 50% left and 50% right
+        self.bottom_horizontal_splitter = QSplitter(Qt.Orientation.Horizontal)
         self.vertical_splitter.addWidget(self.top_widget)
-        self.vertical_splitter.addWidget(self.bottom_panel)
+        self.vertical_splitter.addWidget(self.bottom_horizontal_splitter)
+
+        # Left panel in the bottom area for DeleteFeatureWidget
+        self.bottom_left_panel = self.deleteFeature
+        self.bottom_horizontal_splitter.addWidget(self.bottom_left_panel)
+
+        # Right panel in the bottom area
+        self.bottom_right_panel = QWidget() 
+        self.bottom_horizontal_splitter.addWidget(self.bottom_right_panel)
 
         # Set initial sizes for splitters to maintain the proportions
-        self.vertical_splitter.setSizes([int(self.height() * 0.6), int(self.height() * 0.4)])
+        self.vertical_splitter.setSizes([int(self.height() * 0.45), int(self.height() * 0.55)])
         self.horizontal_splitter.setSizes([int(self.width() * 0.4), int(self.width() * 0.6)])
         self.left_vertical_splitter.setSizes([int(self.left_vertical_splitter.height() * 0.6), int(self.left_vertical_splitter.height() * 0.4)])
+        self.bottom_horizontal_splitter.setSizes([int(self.width() * 0.5), int(self.width() * 0.5)])
 
-        # Set the window title
+        # Set the window title and size
         self.setWindowTitle("Graph Theory Sketchpad")
-
-        # Set minimum size
         self.setMinimumSize(800, 600)
-
-        # Show the main window
         self.show()
