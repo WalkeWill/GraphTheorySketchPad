@@ -1,9 +1,9 @@
 from PyQt6.QtWidgets import QGraphicsScene
 from PyQt6.QtGui import QBrush, QColor
-from PyQt6.QtCore import QRectF
 from edge import Loop, Edge
 from vertex import VertexNode
 from collections import defaultdict
+import copy
 
 class Graph(QGraphicsScene):
     def __init__(self, parent=None):
@@ -108,5 +108,18 @@ class Graph(QGraphicsScene):
     def getIsBipartite(self):
         return 'N/A'
     
+    def copy(self):
+        new_graph = Graph()
+        new_graph.vertices = list(self.vertices)
+        new_graph.verticeLabels = dict(self.verticeLabels)
+        new_graph.edgeLabels = dict(self.edgeLabels)
+        new_graph.edges = list(self.edges)
+        return new_graph
+
     def is_bridge(self, edge):
-        return True 
+        new = self.copy()
+        before = new.getNumComponents()
+        new.edges.remove(edge)
+        new.edgeLabels[(edge.start.name, edge.end.name)] -= 1
+        after = new.getNumComponents()
+        return before != after

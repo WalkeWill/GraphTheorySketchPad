@@ -3,7 +3,8 @@ from PyQt6.QtCore import Qt
 from widgets.graph_widget import GraphWidget
 from widgets.add_feature_widget import FeatureWidget
 from widgets.graph_info_widget import GraphInfoWidget
-from widgets.delete_feature_widget import DeleteFeatureWidget
+from widgets.vertex_widget import VertexWidget
+from widgets.edge_widget import EdgeWidget
 
 class GraphTheorySketchpad(QMainWindow):
     def __init__(self):
@@ -11,8 +12,9 @@ class GraphTheorySketchpad(QMainWindow):
         self.graphWidget = GraphWidget()
         self.graph = self.graphWidget.graph
         self.info = GraphInfoWidget(self.graph)
-        self.deleteFeature = DeleteFeatureWidget(self.graph,self.info)
-        self.addFeature = FeatureWidget(self.graph, self.info, self.deleteFeature)
+        self.deleteVertex = VertexWidget(self.graph,self.info)
+        self.deleteEdge = EdgeWidget(self.graph,self.info)
+        self.addFeature = FeatureWidget(self.graph, self.info, self.deleteVertex, self.deleteEdge)
 
         # Main widget and layout
         self.main_widget = QWidget()
@@ -55,11 +57,11 @@ class GraphTheorySketchpad(QMainWindow):
         self.vertical_splitter.addWidget(self.bottom_horizontal_splitter)
 
         # Left panel in the bottom area for DeleteFeatureWidget
-        self.bottom_left_panel = self.deleteFeature
+        self.bottom_left_panel = self.deleteVertex
         self.bottom_horizontal_splitter.addWidget(self.bottom_left_panel)
 
         # Right panel in the bottom area
-        self.bottom_right_panel = QWidget() 
+        self.bottom_right_panel = self.deleteEdge
         self.bottom_horizontal_splitter.addWidget(self.bottom_right_panel)
 
         # Set initial sizes for splitters to maintain the proportions
