@@ -13,8 +13,14 @@ class Graph(QGraphicsScene):
         self.verticeLabels = {}
         self.edges = []
         self.edgeLabels = defaultdict(int)
+        self.add_vertex('v1')
+        self.add_vertex('v2')
+        self.add_vertex('v3')
+        self.add_vertex('v4')
+        self.add_edge('v1', 'v2')
+        self.add_edge('v3', 'v4')
 
-    def add_vertex(self, label, color, diameter=30):
+    def add_vertex(self, label, color='Blue', diameter=30):
         diameter = 30
         x = 100 + (len(self.vertices) % 5) * 50 
         y = 100 + int(len(self.vertices) / 5) * 50
@@ -69,7 +75,6 @@ class Graph(QGraphicsScene):
     
     def get_degree(self, vertex):
         degree = 0
-        g = self.edgeLabels
         for e in self.edgeLabels:
             if vertex.name in e:
                 if e[0] == e[1]:
@@ -80,10 +85,28 @@ class Graph(QGraphicsScene):
         return degree
     
     def getNumComponents(self):
-        return 'N/A'
+        seen = []
+        frontier = list(self.verticeLabels.keys())
+
+        def dfs(node):
+            if node not in seen:
+                seen.append(node)
+                edges = list(filter(lambda x: self.edgeLabels[x] > 0 and node in x, self.edgeLabels))
+                for v1, v2 in edges:
+                    seen.append(v1)
+                    dfs(v1)
+                    dfs(v2)
+
+        total_components = 0
+        for vertex in frontier:
+            if vertex not in seen:
+                dfs(vertex)
+                total_components += 1
+
+        return total_components
 
     def getIsBipartite(self):
         return 'N/A'
     
     def is_bridge(self, edge):
-        return True
+        return True 
