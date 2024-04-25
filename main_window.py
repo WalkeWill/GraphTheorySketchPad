@@ -12,8 +12,8 @@ class GraphTheorySketchpad(QMainWindow):
         self.graphWidget = GraphWidget()
         self.graph = self.graphWidget.graph
         self.info = GraphInfoWidget(self.graph)
-        self.deleteVertex = VertexWidget(self.graph,self.info)
         self.deleteEdge = EdgeWidget(self.graph,self.info)
+        self.deleteVertex = VertexWidget(self.graph,self.info, self.deleteEdge)
         self.addFeature = FeatureWidget(self.graph, self.info, self.deleteVertex, self.deleteEdge)
 
         # Main widget and layout

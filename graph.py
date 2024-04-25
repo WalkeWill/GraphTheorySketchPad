@@ -13,12 +13,6 @@ class Graph(QGraphicsScene):
         self.verticeLabels = {}
         self.edges = []
         self.edgeLabels = defaultdict(int)
-        self.add_vertex('1')
-        self.add_vertex('2')
-        self.add_vertex('3')
-        self.add_edge('1','2')
-        self.add_edge('2','3')
-        self.add_edge('1','3')
 
     def add_vertex(self, label, color='Blue', diameter=30):
         diameter = 30

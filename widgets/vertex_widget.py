@@ -1,10 +1,11 @@
 from PyQt6.QtWidgets import QWidget, QVBoxLayout, QHBoxLayout, QLabel, QPushButton, QListWidget, QListWidgetItem, QSizePolicy
 
 class VertexWidget(QWidget):
-    def __init__(self, graph, info):
+    def __init__(self, graph, info, edgeWidget):
         super().__init__()
         self.graph = graph
         self.info = info
+        self.edgeWidget = edgeWidget
         self.initUI()
 
     def initUI(self):
@@ -45,3 +46,4 @@ class VertexWidget(QWidget):
         self.graph.delete_vertex(vertex)
         self.update_vertex_list()
         self.info.update_info()
+        self.edgeWidget.update_edge_list()
