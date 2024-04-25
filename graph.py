@@ -13,18 +13,12 @@ class Graph(QGraphicsScene):
         self.verticeLabels = {}
         self.edges = []
         self.edgeLabels = defaultdict(int)
-        self.add_vertex('v1')
-        self.add_vertex('v2')
-        self.add_vertex('v3')
-        self.add_edge('v1', 'v2')
-        self.add_edge('v1', 'v1')
-        self.add_edge('v2', 'v3')
-        self.delete_vertex(self.vertices[0])
 
-    def add_vertex(self, label, diameter=30):
+    def add_vertex(self, label, color, diameter=30):
+        diameter = 30
         x = 100 + (len(self.vertices) % 5) * 50 
         y = 100 + int(len(self.vertices) / 5) * 50
-        vertex = VertexNode(label, diameter)
+        vertex = VertexNode(label, color, diameter)
         vertex.setPos(x, y)
         self.addItem(vertex)
         self.vertices.append(vertex)
@@ -66,8 +60,3 @@ class Graph(QGraphicsScene):
     def update_graphics(self):
         for edge in self.edges:
             edge.update_position()
-
-    def update_scene_bounds(self):
-        # Adjust scene bounds to the current view size
-        view_rect = self.views()[0].viewport().rect()
-        self.setSceneRect(QRectF(view_rect))
